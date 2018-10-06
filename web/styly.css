@@ -1,0 +1,132 @@
+Html,Body{height:100%}
+Body{color:#262626; font-family:McLaren,"Palatino Linotype","Book Antiqua",serif; font-size:.7em; margin:0}
+
+Header,Section,Footer{width:100%}
+.rozsazeny A{padding-left:.6em; padding-right:.6em}
+
+Header{background:rgba(255,255,255,.85); font-size:1.2em; position:fixed; z-index:10}
+.headroom--pinned{display:block}
+.headroom--unpinned{display:none}
+.headroom--bottom{display:block}
+Header>*{margin:.5em}
+H1{float:left; font-size:1.4em}
+A{color:dimgray; cursor:pointer; text-decoration:none}
+A:hover,A:active{text-shadow:0 0 .2em}
+Header>B{float:right; margin:.9em auto}
+.icon{font-size:1.5em}
+Header .text{display:none}
+
+Section,Footer{display:table}
+.siroky{height:90%}
+.uzky{height:45%}
+Section.uzky H2{color:white; font-size:1em}
+Section>Div,Footer>Div{display:table-cell; padding:1em; text-align:center; text-transform:uppercase; vertical-align:middle}
+.siroky>Div{font-weight:bold}
+
+H2{font-size:1.6em}
+Strong{font-size:2.4em}
+
+#kdo{background:white; background:url(kdo.png) bottom 10% right -5%/50% no-repeat fixed white}
+#kdo>Span,#kdo>B{margin:auto; position:absolute; text-align:center; left:0; right:0}
+#kdo>Span{bottom:12%; z-index:1}
+#kdo>B{background:inherit; -moz-border-radius:.8em; -webkit-border-radius:.8em; border-radius:.8em; font-size:3em; height:.8em; width:.8em; bottom:8%}
+
+#kde{background:#BBBB33; background:url(kde.png) bottom 10% right -5%/50% no-repeat fixed #BBBB33; color:white}
+
+#projekty{background:#262626; background:url(projekty.png) bottom 10% right -5%/50% no-repeat fixed #262626; color:gray}
+#projekty A{color:gray}
+
+#kontakt{background:#CFE5B7; background:url(kontakt.png) bottom 10% right -5%/50% no-repeat fixed crimson}
+#kontakt H2{color:salmon}
+#kontakt .icon{color:white; font-size:3em}
+
+#twitter{background:#55ACEE; background:url(twitter.png) bottom 10% right -5%/50% no-repeat fixed #55ACEE; color:black}
+#twitter img{width:1.2em}
+#twitter A{color:#292F33}
+.tlacitko{background:white; -moz-border-radius:.25em; -webkit-border-radius:.25em; border-radius:.25em; display:-moz-inline-stack; display:inline-block; line-height:.8em; margin:1em; padding:.6em 1.6em}
+.tlacitko:hover,.tlacitko:active{-moz-box-shadow:0 0 .2em white; -webkit-box-shadow:0 0 .2em white; box-shadow:0 0 .2em white}
+
+#petice{background:darkorange; background:url(petice.png) bottom 10% right -5%/50% no-repeat fixed darkorange}
+#petice A{color:#262626}
+
+Footer{background:#262626; background:url(pata.png) bottom 10% right -5%/50% no-repeat fixed #262626; color:dimgray}
+Footer Small{font-size:.8em}
+.tajny{color:inherit; cursor:inherit}
+.tajny:hover,.tajny:active{text-shadow:none}
+
+@media (orientation:landscape) and (max-width:430px) {
+Body{font-size:.6em}
+Section,Footer{background-size:37.5% !important}
+}
+
+@media (orientation:landscape) and (min-width:430px) {
+Section,Footer{background-size:35% !important}
+#kontakt .icon{font-size:4em}
+}
+
+@media (orientation:landscape) and (min-width:490px) {
+Body{font-size:.8em}
+Section,Footer{background-position:bottom -10% right -5% !important; background-size:32.5% !important}
+}
+
+@media (orientation:landscape) and (min-width:610px) {
+Body{font-size:.9em}
+Section,Footer{background-position:bottom 0 right -5% !important; background-size:30% !important}
+}
+
+@media (orientation:landscape) and (min-width:730px) {
+Header .icon{display:none}
+Header .text{display:inline}
+Section,Footer{background-position:bottom 10% right -5% !important}
+#kdo{background:white; background:url(kdob.png) left -10% bottom/40% no-repeat fixed white !important}
+#kde{background:#BBBB33; background:url(kdeb.jpg) center/cover no-repeat fixed #BBBB33 !important}
+Footer{background:#262626; background:url(patab.png) bottom left/contain no-repeat fixed #262626 !important}
+}
+
+@media (orientation:landscape) and (min-width:850px) {
+Body{font-size:1em}
+.rozsazeny A{padding-left:.9em; padding-right:.9em}
+Section,Footer{background-size:27.5% !important}
+#kdo{background:white; background:url(kdob.png) left -10% bottom/40% no-repeat fixed white !important}
+#kde{background:#BBBB33; background:url(kdeb.jpg) center/cover no-repeat fixed #BBBB33 !important}
+Footer{background:#262626; background:url(patab.png) bottom left/contain no-repeat fixed #262626 !important}
+}
+
+@media (orientation:landscape) and (min-width:1090px) {
+.rozsazeny A{padding-left:1.2em; padding-right:1.2em}
+Header .icon{display:inline}
+#kdo{background:white; background:url(kdob.png) left -10% bottom 50%/40% no-repeat fixed white !important}
+#kontakt .icon{font-size:5em}
+}
+
+@media (orientation:landscape) and (min-width:1570px) {
+.rozsazeny A{padding-left:1.5em; padding-right:1.5em}
+#kontakt .icon{font-size:6em}
+}
+
+@media (orientation:portrait) and (max-width:310px) {
+Body{font-size:.6em}
+}
+
+@media (orientation:portrait) and (min-width:370px) {
+Body{font-size:.8em}
+}
+
+@media (orientation:portrait) and (min-width:430px) {
+Body{font-size:.9em}
+}
+
+@media (orientation:portrait) and (min-width:490px) {
+Body{font-size:1em}
+}
+
+@media (orientation:portrait) and (min-width:610px) {
+Header .icon{display:none}
+Header .text{display:inline}
+#kontakt .icon{font-size:4em}
+}
+
+@media (orientation:portrait) and (min-width:850px) {
+Header .icon{display:inline}
+#kontakt .icon{font-size:5em}
+}

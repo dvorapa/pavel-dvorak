@@ -1,0 +1,14 @@
+/* TEAM */
+Author: Pavel Dvořák
+Twitter: @dvorapa
+From: Liberec, Czech Republic
+
+/* THANKS */
+Photographs by: Lukáš Komárek (@spiritijou)
+
+/* SITE */
+Technologies: HTML5, CSS3 and Dart
+Components: Hint.css, Headroom.js, Ionicons, MFG Labs icon set and Twitter Post Fetcher
+Packages: Grinder and YAML
+Tools: Icomoon, Google Fonts, TinyPNG and RealFaviconGenerator
+Polyfills: HTML5 shiv
