@@ -27,6 +27,13 @@ move() {
   }
 }
 
+@Task("Webdev")
+@Depends(move)
+webdev() async {
+  Pub.upgrade();
+  await Process.run("webdev", ["build"]);
+}
+
 @Task("Vraceni")
 restore() {
   if (tmpSoubor.existsSync()) {
@@ -46,11 +53,8 @@ restore() {
 }
 
 @DefaultTask("Build")
-@Depends(move)
-build() {
-  Pub.build();
-}
+@Depends(move, webdev, restore)
+build() {}
 
 @Task("Obnoveni")
-@Depends(restore)
 clean() => defaultClean();
