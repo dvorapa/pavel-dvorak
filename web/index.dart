@@ -9,7 +9,7 @@ String stav;
 ///  _  _ . _
 /// |||(_||| )
 ///
-main() {
+void main() {
   HttpRequest.getString("stav.yaml").then((String yaml) {
     mapa = loadYaml(yaml);
     if (dnes.isAfter(DateTime.parse(mapa["termin"]))) {
@@ -33,25 +33,26 @@ main() {
 ///     |_   _  v.|_
 /// \/\/|_\/(_)|‾||_
 ///   /
-vytvorit() {
+void vytvorit() {
   if (dnes.weekday <= 5) {
-    if (dnes.hour == 6 && dnes.minute < 20) {
+    if (dnes.hour == 6) {
       stav = "u snídaně";
-    } else if (dnes.hour == 12 && dnes.minute < 20) {
+    } else if (dnes.hour == 12) {
       stav = "u oběda";
-    } else if (dnes.hour == 21 && dnes.minute < 20) {
+    } else if (dnes.hour == 21) {
       stav = "u večeře";
-    } else if (dnes.hour < 6 || dnes.hour >= 22) {
+    } else if (dnes.hour < 6 || dnes.hour >= 23) {
       stav = "v limbu";
     } else if ((dnes.hour == 8 && dnes.minute >= 45) ||
-        (dnes.hour > 8 && dnes.hour < 16) ||
-        (dnes.hour == 16 && dnes.minute < 45)) {
+        (dnes.hour > 8 && dnes.hour < 15) ||
+        (dnes.hour == 15 && dnes.minute < 30)) {
       stav = "ve škole";
-    } else if ((dnes.hour == 16 && dnes.minute >= 55) ||
-        (dnes.hour > 16 && dnes.hour < 20) ||
-        (dnes.hour == 20 && dnes.minute < 30)) {
+    } else if ((dnes.hour > 15 && dnes.hour < 20) ||
+        (dnes.hour == 20 && dnes.minute < 10)) {
       stav = "na tanci";
-    } else if ((dnes.hour == 8 && dnes.minute >= 15) ||
+    } else if (dnes.hour > 6 && dnes.hour < 17) {
+      stav = "v práci";
+    } else if ((dnes.hour == 8 && dnes.minute >= 35) ||
         (dnes.hour > 8 && dnes.hour < 21) ||
         (dnes.hour == 21 && dnes.minute < 30)) {
       stav = "venku";
@@ -61,7 +62,7 @@ vytvorit() {
   } else if (dnes.weekday > 5) {
     if (dnes.hour == 8 && dnes.minute < 20) {
       stav = "u snídaně";
-    } else if (dnes.hour == 13 && dnes.minute < 20) {
+    } else if (dnes.hour == 12 && dnes.minute < 20) {
       stav = "u oběda";
     } else if (dnes.hour == 18 && dnes.minute < 20) {
       stav = "u večeře";
@@ -76,7 +77,7 @@ vytvorit() {
 ///  _| _  _ | _ .|_
 /// (_|(_)|_)|| )||_
 ///       |
-doplnit() {
+void doplnit() {
   if (stav == "doma") {
     mapa = {"in": 1, "tw": 1, "em": 1, "os": 1, "mo": 1, "me": 1, "li": 0};
   } else if (["venku", "na kole", "na cestě"].contains(stav)) {
@@ -89,7 +90,7 @@ doplnit() {
 ///  _ |_  _  _  .|_
 /// (_)|_)(_|| \/||_
 ///
-obarvit() {
+void obarvit() {
   mapa.forEach((promenna, hodnota) {
     if (mapa[promenna] == 1 || mapa[promenna] == "on") {
       Element prvek = querySelector("#" + promenna);
@@ -105,7 +106,7 @@ obarvit() {
 ///    _|_ _     _ .|_  |   |_  _ _|
 /// \/_)|_(_)|_||_)||_  |(  | )(-_)||_|
 ///             |
-vstoupitkheslu(_) async {
+void vstoupitkheslu(_) async {
   int i = 0;
   var heslo = "";
   while (heslo != window.atob("bHRlcGV0YWtvcG9w") && heslo != null) {
@@ -124,7 +125,7 @@ vstoupitkheslu(_) async {
 ///    _|_ _     _ .|_  |   _  _/ _ . _
 /// \/_)|_(_)|_||_)||_  |(  /_(_||_)|_)|_|
 ///             |                |
-vstoupitkzapisu(_) async {
+void vstoupitkzapisu(_) async {
   FormElement formular = FormElement();
   formular
     ..action = "zapis.php"
@@ -211,7 +212,7 @@ vstoupitkzapisu(_) async {
 /// _  _  _  _ _ |_
 /// /_(_||_)_)(_||_
 ///      |
-zapsat(List<Node> stav, FormElement formular) {
+void zapsat(List<Node> stav, FormElement formular) {
   querySelector("body").children.add(formular);
   formular.submit();
 }

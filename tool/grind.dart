@@ -6,10 +6,10 @@ Directory slozkaWebu = Directory("web/");
 File tmpSoubor = File(Directory.systemTemp.path + "/pavel-dvorak");
 String seznamIkon = "";
 
-main(args) => grind(args);
+void main(args) => grind(args);
 
 @Task("Presunuti")
-move() {
+void move() {
   if (slozkaIkon.existsSync()) {
     List<FileSystemEntity> ikony = slozkaIkon.listSync();
 
@@ -29,13 +29,13 @@ move() {
 
 @Task("Webdev")
 @Depends(move)
-webdev() async {
+void webdev() async {
   Pub.upgrade();
   await Process.run("webdev", ["build"]);
 }
 
 @Task("Vraceni")
-restore() {
+void restore() {
   if (tmpSoubor.existsSync()) {
     slozkaIkon.createSync(recursive: true);
     tmpSoubor.readAsLines().then((List<String> ikony) {
@@ -54,7 +54,7 @@ restore() {
 
 @DefaultTask("Build")
 @Depends(move, webdev, restore)
-build() {}
+void build() {}
 
 @Task("Obnoveni")
-clean() => defaultClean();
+void clean() => defaultClean();

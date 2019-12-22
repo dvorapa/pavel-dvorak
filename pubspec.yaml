@@ -1,11 +1,16 @@
 name: pavel_dvorak
-author: Pavel Dvořák
 description: Osobní webové stránky Pavla Dvořáka – chemika, tanečníka, seveřana
-version: 1.6.0
+version: 1.6.1
+author: Pavel Dvořák
+
+environment:
+  sdk: ">=2.0.0 <3.0.0"
+
 dependencies:
-  dialog: any
+  dialog: ">=0.7.0"
   yaml: any
+
 dev_dependencies:
+  build_runner: ^1.6.2
+  build_web_compilers: ^2.0.0
   grinder: any
-  build_runner: ^0.10.0
-  build_web_compilers: ^0.4.0
