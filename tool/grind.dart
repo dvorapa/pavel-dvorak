@@ -8,7 +8,7 @@ String seznamIkon = "";
 
 void main(args) => grind(args);
 
-@Task("Presunuti")
+@Task("Přesun ikon")
 void move() {
   if (slozkaIkon.existsSync()) {
     List<FileSystemEntity> ikony = slozkaIkon.listSync();
@@ -27,14 +27,7 @@ void move() {
   }
 }
 
-@Task("Webdev")
-@Depends(move)
-void webdev() async {
-  Pub.upgrade();
-  await Process.run("webdev", ["build"]);
-}
-
-@Task("Vraceni")
+@Task("Vrácení ikon")
 void restore() {
   if (tmpSoubor.existsSync()) {
     slozkaIkon.createSync(recursive: true);
@@ -52,9 +45,26 @@ void restore() {
   }
 }
 
+@Task("pub upgrade")
+void upgrade() async {
+  Pub.upgrade();
+}
+
+@Task("webdev build")
+@Depends(upgrade, move)
+void webdevBuild() async {
+  await Process.run("webdev", ["build"]);
+}
+
+@Task("webdev serve")
+@Depends(upgrade, move)
+void serve() async {
+  await Process.run("webdev", ["serve"]);
+}
+
 @DefaultTask("Build")
-@Depends(move, webdev, restore)
+@Depends(upgrade, move, webdevBuild, restore)
 void build() {}
 
-@Task("Obnoveni")
+@Task("Smazání buildu")
 void clean() => defaultClean();

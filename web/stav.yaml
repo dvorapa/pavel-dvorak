@@ -1,9 +1,9 @@
 stav: kdes
-in: 1
-tw: 1
-em: 0
-os: 1
-mo: 1
-me: 1
-li: 0
-termin: 2019-12-20 18:00
+in: on
+tw: on
+em: on
+os: on
+mo: on
+me: on
+li: 
+termin: 2020-01-01 00:00

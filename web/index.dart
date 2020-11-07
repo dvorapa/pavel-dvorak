@@ -35,39 +35,34 @@ void main() {
 ///   /
 void vytvorit() {
   if (dnes.weekday <= 5) {
-    if (dnes.hour == 6) {
-      stav = "u snídaně";
-    } else if (dnes.hour == 12) {
-      stav = "u oběda";
-    } else if (dnes.hour == 21) {
-      stav = "u večeře";
-    } else if (dnes.hour < 6 || dnes.hour >= 23) {
+    if (dnes.hour < 5 || dnes.hour >= 22) {
       stav = "v limbu";
-    } else if ((dnes.hour == 8 && dnes.minute >= 45) ||
-        (dnes.hour > 8 && dnes.hour < 15) ||
-        (dnes.hour == 15 && dnes.minute < 30)) {
-      stav = "ve škole";
-    } else if ((dnes.hour > 15 && dnes.hour < 20) ||
-        (dnes.hour == 20 && dnes.minute < 10)) {
-      stav = "na tanci";
-    } else if (dnes.hour > 6 && dnes.hour < 17) {
+    } else if (dnes.hour == 5 && dnes.minute < 30) {
+      stav = "u snídaně";
+    } else if (dnes.hour == 12 && dnes.minute < 30) {
+      stav = "u oběda";
+    } else if (dnes.hour >= 6 && dnes.hour < 15) {
       stav = "v práci";
-    } else if ((dnes.hour == 8 && dnes.minute >= 35) ||
-        (dnes.hour > 8 && dnes.hour < 21) ||
+    } else if (dnes.hour >= 17 && dnes.hour < 20) {
+      stav = "na tanci";
+    } else if (dnes.hour == 21 && dnes.minute >= 30) {
+      stav = "u večeře";
+    } else if ((dnes.hour == 5 && dnes.minute >= 30) ||
+        (dnes.hour > 5 && dnes.hour < 21) ||
         (dnes.hour == 21 && dnes.minute < 30)) {
       stav = "venku";
     } else {
       stav = "doma";
     }
-  } else if (dnes.weekday > 5) {
-    if (dnes.hour == 8 && dnes.minute < 20) {
-      stav = "u snídaně";
-    } else if (dnes.hour == 12 && dnes.minute < 20) {
-      stav = "u oběda";
-    } else if (dnes.hour == 18 && dnes.minute < 20) {
-      stav = "u večeře";
-    } else if (dnes.hour < 8) {
+  } else {
+    if (dnes.hour < 9) {
       stav = "v limbu";
+    } else if (dnes.hour == 9 && dnes.minute < 30) {
+      stav = "u snídaně";
+    } else if (dnes.hour == 11 && dnes.minute < 30) {
+      stav = "u oběda";
+    } else if (dnes.hour == 18 && dnes.minute < 30) {
+      stav = "u večeře";
     } else {
       stav = "doma";
     }
@@ -82,6 +77,8 @@ void doplnit() {
     mapa = {"in": 1, "tw": 1, "em": 1, "os": 1, "mo": 1, "me": 1, "li": 0};
   } else if (["venku", "na kole", "na cestě"].contains(stav)) {
     mapa = {"in": 0, "tw": 0, "em": 0, "os": 1, "mo": 1, "me": 0, "li": 0};
+  } else if (["v karanténě", "v izolaci"].contains(stav)) {
+    mapa = {"in": 1, "tw": 1, "em": 1, "os": 0, "mo": 1, "me": 1, "li": 0};
   } else {
     mapa = {"in": 0, "tw": 0, "em": 0, "os": 1, "mo": 0, "me": 0, "li": 0};
   }
@@ -110,7 +107,6 @@ void vstoupitkheslu(_) async {
   int i = 0;
   var heslo = "";
   while (heslo != window.atob("bHRlcGV0YWtvcG9w") && heslo != null) {
-    heslo = await prompt("Heslo", "");
     if (i > 0) {
       querySelector("#dialogInput").style
         ..borderColor = "firebrick"
@@ -118,6 +114,7 @@ void vstoupitkheslu(_) async {
     } else {
       i++;
     }
+    heslo = await prompt("Heslo", "");
   }
   if (heslo != null) vstoupitkzapisu(_);
 }
@@ -132,71 +129,115 @@ void vstoupitkzapisu(_) async {
     ..method = "post";
   LabelElement ke_stavu = LabelElement();
   ke_stavu
-    ..htmlFor = "stav"
+    ..htmlFor = "je_stav"
     ..text = "Stav:";
   InputElement stav = InputElement();
-  stav.name = "stav";
-  BRElement br = BRElement();
+  stav
+    ..id = "je_stav"
+    ..name = "stav";
   LabelElement k_polim = LabelElement();
   k_polim.text = "Online:";
-  BRElement br2 = BRElement();
+  BRElement br = BRElement();
   InputElement je_in = InputElement();
   je_in
+    ..id = "je_in"
     ..name = "in"
     ..type = "checkbox"
     ..checked = true;
+  LabelElement st_in = LabelElement();
+  st_in
+    ..className = "icon icon-instagram"
+    ..htmlFor = "je_in";
   InputElement je_tw = InputElement();
   je_tw
+    ..id = "je_tw"
     ..name = "tw"
     ..type = "checkbox"
     ..checked = true;
+  LabelElement st_tw = LabelElement();
+  st_tw
+    ..className = "icon icon-twitter1"
+    ..htmlFor = "je_tw";
   InputElement je_em = InputElement();
   je_em
+    ..id = "je_em"
+    ..name = "em"
     ..type = "checkbox"
-    ..name = "em";
+    ..checked = true;
+  LabelElement st_em = LabelElement();
+  st_em
+    ..className = "icon icon-email"
+    ..htmlFor = "je_em";
   InputElement je_os = InputElement();
   je_os
+    ..id = "je_os"
     ..name = "os"
     ..type = "checkbox"
     ..checked = true;
+  LabelElement st_os = LabelElement();
+  st_os
+    ..className = "icon icon-man"
+    ..htmlFor = "je_os";
   InputElement je_mo = InputElement();
   je_mo
+    ..id = "je_mo"
     ..name = "mo"
     ..type = "checkbox"
     ..checked = true;
+  LabelElement st_mo = LabelElement();
+  st_mo
+    ..className = "icon icon-smartphone"
+    ..htmlFor = "je_mo";
   InputElement je_me = InputElement();
   je_me
+    ..id = "je_me"
     ..name = "me"
     ..type = "checkbox"
     ..checked = true;
+  LabelElement st_me = LabelElement();
+  st_me
+    ..className = "icon icon-messenger"
+    ..htmlFor = "je_me";
   InputElement je_li = InputElement();
   je_li
-    ..type = "checkbox"
-    ..name = "li";
-  BRElement br3 = BRElement();
+    ..id = "je_li"
+    ..name = "li"
+    ..type = "checkbox";
+  LabelElement st_li = LabelElement();
+  st_li
+    ..className = "icon icon-linkedin"
+    ..htmlFor = "je_li";
+  BRElement br2 = BRElement();
   LabelElement k_terminu = LabelElement();
   k_terminu
-    ..htmlFor = "termin"
+    ..htmlFor = "je_termin"
     ..text = "Termín:";
   InputElement termin = InputElement();
   termin
     ..name = "termin"
+    ..id = "je_termin"
     ..type = "datetime-local"
     ..value = dnes.toString().substring(0, 16);
   List<Node> pole = [
     ke_stavu,
     stav,
-    br,
     k_polim,
-    br2,
+    br,
     je_in,
+    st_in,
     je_tw,
+    st_tw,
     je_em,
+    st_em,
     je_os,
+    st_os,
     je_mo,
+    st_mo,
     je_me,
+    st_me,
     je_li,
-    br3,
+    st_li,
+    br2,
     k_terminu,
     termin
   ];

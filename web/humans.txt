@@ -8,7 +8,7 @@ Photographs by: Lukáš Komárek (@spiritijou)
 
 /* SITE */
 Technologies: HTML5, CSS3 and Dart
-Components: Hint.css, Headroom.js, Ionicons, Feather and Twitter Post Fetcher
-Packages: Grinder and YAML
+Components: Hint.css, Headroom.js, Ionicons, Feather, Linearicons, Linecons, Smashicons and Twitter Post Fetcher
+Packages: Dialog, Grinder and YAML
 Tools: Icomoon, Google Fonts, TinyPNG and RealFaviconGenerator
 Polyfills: HTML5 shiv
