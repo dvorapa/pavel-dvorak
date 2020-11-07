@@ -52,6 +52,7 @@ Strong{font-size:2.4em}
 Footer{background:#262626; background:url(pata.png) bottom 10% right -5%/50% no-repeat fixed #262626; color:dimgray}
 .tajny{color:inherit; cursor:inherit}
 .tajny:hover,.tajny:active{text-shadow:none}
+.modal-body label:not(.icon){display:block}
 .modal-body input[type=checkbox]{display:none}
 .modal-body input[type=checkbox]+label{color:silver; margin-right:.5em}
 .modal-body input[type=checkbox]:checked+label{color:greenyellow}

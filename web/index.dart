@@ -137,7 +137,6 @@ void vstoupitkzapisu(_) async {
     ..name = "stav";
   LabelElement k_polim = LabelElement();
   k_polim.text = "Online:";
-  BRElement br = BRElement();
   InputElement je_in = InputElement();
   je_in
     ..id = "je_in"
@@ -207,7 +206,6 @@ void vstoupitkzapisu(_) async {
   st_li
     ..className = "icon icon-linkedin"
     ..htmlFor = "je_li";
-  BRElement br2 = BRElement();
   LabelElement k_terminu = LabelElement();
   k_terminu
     ..htmlFor = "je_termin"
@@ -222,7 +220,6 @@ void vstoupitkzapisu(_) async {
     ke_stavu,
     stav,
     k_polim,
-    br,
     je_in,
     st_in,
     je_tw,
@@ -237,7 +234,6 @@ void vstoupitkzapisu(_) async {
     st_me,
     je_li,
     st_li,
-    br2,
     k_terminu,
     termin
   ];
