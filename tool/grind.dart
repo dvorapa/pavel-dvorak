@@ -14,13 +14,13 @@ void move() {
     List<FileSystemEntity> ikony = slozkaIkon.listSync();
 
     print("Nasledujici soubory budou presunuty:");
-    ikony.forEach((FileSystemEntity polozka) {
+    for (final FileSystemEntity polozka in ikony) {
       if ((polozka is File) && (polozka.existsSync())) {
         print(polozka.path.substring(22));
         seznamIkon = seznamIkon + polozka.path.substring(22) + "\n";
         polozka.copySync(slozkaWebu.path + polozka.path.substring(22));
       }
-    });
+    }
 
     tmpSoubor.writeAsString(seznamIkon);
     slozkaIkon.deleteSync(recursive: true);
@@ -33,14 +33,14 @@ void restore() {
     slozkaIkon.createSync(recursive: true);
     tmpSoubor.readAsLines().then((List<String> ikony) {
       print("Nasledujici soubory budou vraceny:");
-      ikony.forEach((String polozka) {
+      for (final String polozka in ikony) {
         print(polozka);
         File soubor = File(slozkaWebu.path + polozka);
         if (soubor.existsSync()) {
           soubor.copySync(slozkaIkon.path + polozka);
           soubor.deleteSync();
         }
-      });
+      }
     });
   }
 }

@@ -3,14 +3,16 @@ import "package:dialog/dialog.dart";
 import "package:yaml/yaml.dart";
 
 DateTime dnes = DateTime.now();
-Map mapa;
-String stav;
+late Map mapa;
+late String stav;
 
 ///  _  _ . _
 /// |||(_||| )
 ///
 void main() {
-  HttpRequest.getString("stav.yaml").then((String yaml) {
+  HttpRequest.request("stav.yaml", responseType: "text")
+      .then((HttpRequest request) {
+    String yaml = request.responseText ?? "";
     mapa = loadYaml(yaml);
     if (dnes.isAfter(DateTime.parse(mapa["termin"]))) {
       vytvorit();
@@ -19,15 +21,15 @@ void main() {
       stav = mapa["stav"];
       if (mapa["os"] != 1 && mapa["os"] != "on") doplnit();
     }
-  }).catchError((String chyba) {
+  }).catchError((Object chyba) {
     vytvorit();
     doplnit();
   }).whenComplete(() {
-    querySelector("#stav").text = stav;
+    querySelector("#stav")!.text = stav;
     obarvit();
   });
 
-  querySelector("#vchodkheslu").onClick.listen(vstoupitkheslu);
+  querySelector("#vchodkheslu")!.onClick.listen(vstoupitkheslu);
 }
 
 ///     |_   _  v.|_
@@ -74,11 +76,11 @@ void vytvorit() {
 ///       |
 void doplnit() {
   if (stav == "doma") {
-    mapa = {"in": 1, "tw": 1, "em": 1, "os": 1, "mo": 1, "me": 1, "li": 0};
+    mapa = {"in": 0, "tw": 1, "em": 1, "os": 1, "mo": 1, "me": 1, "li": 0};
   } else if (["venku", "na kole", "na cestě"].contains(stav)) {
     mapa = {"in": 0, "tw": 0, "em": 0, "os": 1, "mo": 1, "me": 0, "li": 0};
   } else if (["v karanténě", "v izolaci"].contains(stav)) {
-    mapa = {"in": 1, "tw": 1, "em": 1, "os": 0, "mo": 1, "me": 1, "li": 0};
+    mapa = {"in": 0, "tw": 1, "em": 1, "os": 0, "mo": 1, "me": 1, "li": 0};
   } else {
     mapa = {"in": 0, "tw": 0, "em": 0, "os": 1, "mo": 0, "me": 0, "li": 0};
   }
@@ -90,12 +92,12 @@ void doplnit() {
 void obarvit() {
   mapa.forEach((promenna, hodnota) {
     if (mapa[promenna] == 1 || mapa[promenna] == "on") {
-      Element prvek = querySelector("#" + promenna);
-      String hint = prvek.getAttribute("aria-label");
+      Element prvek = querySelector("#" + promenna)!;
+      String hint = prvek.getAttribute("aria-label")!;
       prvek
         ..classes.add("hint--success")
         ..setAttribute("aria-label", hint + "\ndostupný")
-        ..querySelector(".icon").style.color = "greenyellow";
+        ..querySelector(".icon")!.style.color = "greenyellow";
     }
   });
 }
@@ -104,18 +106,20 @@ void obarvit() {
 /// \/_)|_(_)|_||_)||_  |(  | )(-_)||_|
 ///             |
 void vstoupitkheslu(_) async {
-  int i = 0;
-  var heslo = "";
+  bool poprve = true;
+  String? heslo = "";
+  StyleElement styl = StyleElement();
+  styl.text =
+      "#dialogInput:focus{border-color:firebrick; box-shadow:0 0 0 .2em crimson}";
   while (heslo != window.atob("bHRlcGV0YWtvcG9w") && heslo != null) {
-    if (i > 0) {
-      querySelector("#dialogInput").style
-        ..borderColor = "firebrick"
-        ..boxShadow = "0 0 0 .2em crimson";
+    if (poprve) {
+      poprve = false;
     } else {
-      i++;
+      document.querySelector("head")!.children.add(styl);
     }
-    heslo = await prompt("Heslo", "");
+    heslo = await (prompt("Heslo", ""));
   }
+  document.querySelector("head")!.children.remove(styl);
   if (heslo != null) vstoupitkzapisu(_);
 }
 
@@ -127,87 +131,87 @@ void vstoupitkzapisu(_) async {
   formular
     ..action = "zapis.php"
     ..method = "post";
-  LabelElement ke_stavu = LabelElement();
-  ke_stavu
+  LabelElement keStavu = LabelElement();
+  keStavu
     ..htmlFor = "je_stav"
     ..text = "Stav:";
   InputElement stav = InputElement();
   stav
     ..id = "je_stav"
     ..name = "stav";
-  LabelElement k_polim = LabelElement();
-  k_polim.text = "Online:";
-  InputElement je_in = InputElement();
-  je_in
+  LabelElement kPolim = LabelElement();
+  kPolim.text = "Online:";
+  InputElement jeIn = InputElement();
+  jeIn
     ..id = "je_in"
     ..name = "in"
     ..type = "checkbox"
     ..checked = true;
-  LabelElement st_in = LabelElement();
-  st_in
+  LabelElement stIn = LabelElement();
+  stIn
     ..className = "icon icon-instagram"
     ..htmlFor = "je_in";
-  InputElement je_tw = InputElement();
-  je_tw
+  InputElement jeTw = InputElement();
+  jeTw
     ..id = "je_tw"
     ..name = "tw"
     ..type = "checkbox"
     ..checked = true;
-  LabelElement st_tw = LabelElement();
-  st_tw
+  LabelElement stTw = LabelElement();
+  stTw
     ..className = "icon icon-twitter1"
     ..htmlFor = "je_tw";
-  InputElement je_em = InputElement();
-  je_em
+  InputElement jeEm = InputElement();
+  jeEm
     ..id = "je_em"
     ..name = "em"
     ..type = "checkbox"
     ..checked = true;
-  LabelElement st_em = LabelElement();
-  st_em
+  LabelElement stEm = LabelElement();
+  stEm
     ..className = "icon icon-email"
     ..htmlFor = "je_em";
-  InputElement je_os = InputElement();
-  je_os
+  InputElement jeOs = InputElement();
+  jeOs
     ..id = "je_os"
     ..name = "os"
     ..type = "checkbox"
     ..checked = true;
-  LabelElement st_os = LabelElement();
-  st_os
+  LabelElement stOs = LabelElement();
+  stOs
     ..className = "icon icon-man"
     ..htmlFor = "je_os";
-  InputElement je_mo = InputElement();
-  je_mo
+  InputElement jeMo = InputElement();
+  jeMo
     ..id = "je_mo"
     ..name = "mo"
     ..type = "checkbox"
     ..checked = true;
-  LabelElement st_mo = LabelElement();
-  st_mo
+  LabelElement stMo = LabelElement();
+  stMo
     ..className = "icon icon-smartphone"
     ..htmlFor = "je_mo";
-  InputElement je_me = InputElement();
-  je_me
+  InputElement jeMe = InputElement();
+  jeMe
     ..id = "je_me"
     ..name = "me"
     ..type = "checkbox"
     ..checked = true;
-  LabelElement st_me = LabelElement();
-  st_me
+  LabelElement stMe = LabelElement();
+  stMe
     ..className = "icon icon-messenger"
     ..htmlFor = "je_me";
-  InputElement je_li = InputElement();
-  je_li
+  InputElement jeLi = InputElement();
+  jeLi
     ..id = "je_li"
     ..name = "li"
     ..type = "checkbox";
-  LabelElement st_li = LabelElement();
-  st_li
+  LabelElement stLi = LabelElement();
+  stLi
     ..className = "icon icon-linkedin"
     ..htmlFor = "je_li";
-  LabelElement k_terminu = LabelElement();
-  k_terminu
+  LabelElement kTerminu = LabelElement();
+  kTerminu
     ..htmlFor = "je_termin"
     ..text = "Termín:";
   InputElement termin = InputElement();
@@ -217,31 +221,29 @@ void vstoupitkzapisu(_) async {
     ..type = "datetime-local"
     ..value = dnes.toString().substring(0, 16);
   List<Node> pole = [
-    ke_stavu,
+    keStavu,
     stav,
-    k_polim,
-    je_in,
-    st_in,
-    je_tw,
-    st_tw,
-    je_em,
-    st_em,
-    je_os,
-    st_os,
-    je_mo,
-    st_mo,
-    je_me,
-    st_me,
-    je_li,
-    st_li,
-    k_terminu,
+    kPolim,
+    jeIn,
+    stIn,
+    jeTw,
+    stTw,
+    jeEm,
+    stEm,
+    jeOs,
+    stOs,
+    jeMo,
+    stMo,
+    jeMe,
+    stMe,
+    jeLi,
+    stLi,
+    kTerminu,
     termin
   ];
-  pole.forEach((prvek) {
-    formular.children.add(prvek);
-  });
-  if (await modal(
-      "Stav?", [formular], "Odeslat", "Zrušit", true, false, true)) {
+  pole.forEach(formular.children.add as void Function(Node));
+  if (await (modal(
+      "Stav?", [formular], "Odeslat", "Zrušit", true, false, true))) {
     zapsat(pole, formular);
   }
 }
@@ -250,6 +252,6 @@ void vstoupitkzapisu(_) async {
 /// /_(_||_)_)(_||_
 ///      |
 void zapsat(List<Node> stav, FormElement formular) {
-  querySelector("body").children.add(formular);
+  querySelector("body")!.children.add(formular);
   formular.submit();
 }
