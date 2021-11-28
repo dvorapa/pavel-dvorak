@@ -4,6 +4,7 @@ Body{color:#262626; font-family:McLaren,"Palatino Linotype","Book Antiqua",serif
 Header,Section,Footer{width:100%}
 .rozsazeny A{padding-left:.6em; padding-right:.6em}
 .rozsazenejsi A{padding-left:1.2em; padding-right:1.2em}
+.nejrozsazenejsi A{padding-left:1.8em; padding-right:1.8em}
 
 Header{background:rgba(255,255,255,.85); font-size:1.2em; position:fixed; text-align:center; z-index:10}
 .headroom--pinned{display:block}
@@ -92,6 +93,7 @@ Footer{background:#262626; background:url(patab.png) bottom left/contain no-repe
 Body{font-size:1em}
 .rozsazeny A{padding-left:.9em; padding-right:.9em}
 .rozsazenejsi A{padding-left:1.8em; padding-right:1.8em}
+.nejrozsazenejsi A{padding-left:2.7em; padding-right:2.7em}
 Section,Footer{background-size:27.5% !important}
 #kdo{background:white; background:url(kdob.png) left -10% bottom/40% no-repeat fixed white !important}
 #kde{background:#BBBB33; background:url(kdeb.jpg) center/cover no-repeat fixed #BBBB33 !important}
@@ -101,6 +103,7 @@ Footer{background:#262626; background:url(patab.png) bottom left/contain no-repe
 @media (orientation:landscape) and (min-width:1090px) {
 .rozsazeny A{padding-left:1.2em; padding-right:1.2em}
 .rozsazenejsi A{padding-left:2.4em; padding-right:2.4em}
+.nejrozsazenejsi A{padding-left:3.6em; padding-right:3.6em}
 Header .icon{display:inline}
 #kdo{background:white; background:url(kdob.png) left -10% bottom 50%/40% no-repeat fixed white !important}
 #projekty .zuzeny{max-width:70%}
@@ -110,6 +113,7 @@ Header .icon{display:inline}
 @media (orientation:landscape) and (min-width:1570px) {
 .rozsazeny A{padding-left:1.5em; padding-right:1.5em}
 .rozsazenejsi A{padding-left:3em; padding-right:3em}
+.nejrozsazenejsi A{padding-left:4.5em; padding-right:4.5em}
 Header .icon{display:inline}
 #projekty .zuzeny{max-width:70%}
 #kontakt .icon{font-size:6em}
