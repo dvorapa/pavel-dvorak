@@ -10,6 +10,7 @@ late String stav;
 /// |||(_||| )
 ///
 void main() {
+  nadepsat(0);
   HttpRequest.request("stav.yaml", responseType: "text")
       .then((HttpRequest request) {
     String yaml = request.responseText ?? "";
@@ -21,7 +22,7 @@ void main() {
       stav = mapa["stav"];
       if (mapa["os"] != 1 && mapa["os"] != "on") doplnit();
     }
-  }).catchError((Object chyba) {
+  }).catchError((_) {
     vytvorit();
     doplnit();
   }).whenComplete(() {
@@ -29,6 +30,7 @@ void main() {
     obarvit();
   });
 
+  window.onScroll.listen(nadepsat);
   querySelector("#vchodkheslu")!.onClick.listen(vstoupitkheslu);
 }
 
@@ -79,7 +81,7 @@ void doplnit() {
     mapa = {"in": 0, "tw": 1, "em": 1, "os": 1, "mo": 1, "me": 1, "li": 0};
   } else if (["venku", "na kole", "na cestě"].contains(stav)) {
     mapa = {"in": 0, "tw": 0, "em": 0, "os": 1, "mo": 1, "me": 0, "li": 0};
-  } else if (["v karanténě", "v izolaci"].contains(stav)) {
+  } else if (["v karanténě", "v izolaci", "nemocný"].contains(stav)) {
     mapa = {"in": 0, "tw": 1, "em": 1, "os": 0, "mo": 1, "me": 1, "li": 0};
   } else {
     mapa = {"in": 0, "tw": 0, "em": 0, "os": 1, "mo": 0, "me": 0, "li": 0};
@@ -90,7 +92,7 @@ void doplnit() {
 /// (_)|_)(_|| \/||_
 ///
 void obarvit() {
-  mapa.forEach((promenna, hodnota) {
+  for (final promenna in mapa.keys) {
     if (mapa[promenna] == 1 || mapa[promenna] == "on") {
       Element prvek = querySelector("#" + promenna)!;
       String hint = prvek.getAttribute("aria-label")!;
@@ -99,7 +101,51 @@ void obarvit() {
         ..setAttribute("aria-label", hint + "\ndostupný")
         ..querySelector(".icon")!.style.color = "greenyellow";
     }
-  });
+  }
+}
+
+///  _  _  _| _ _  _ _ |_
+/// | )(_|(_|(-|_)_)(_||_
+///            |
+void nadepsat(_) {
+  final int vyska = document.body!.offsetHeight;
+  final double siroky = vyska * .9;
+  final double posun = vyska * .6;
+  final int pozice = window.scrollY;
+  final Element kdoObsah = querySelector("#kdo-obsah .text")!;
+  final Element kdeObsah = querySelector("#kde-obsah .text")!;
+  final Element projektyObsah = querySelector("#projekty-obsah .text")!;
+  final Element kontaktObsah = querySelector("#kontakt-obsah .text")!;
+  if (pozice <= posun) {
+    kdoObsah.text = "Pavel Dvořák";
+    kdeObsah.text = "Kde?";
+    projektyObsah.text = "Projekty?";
+    kontaktObsah.text = "Kontakt?";
+  } else if (pozice <= (posun + siroky)) {
+    kdoObsah.text = "Kdo?";
+    kdeObsah.text = "asi " + stav;
+    projektyObsah.text = "Projekty?";
+    kontaktObsah.text = "Kontakt?";
+  } else if (pozice <= (posun + 2 * siroky)) {
+    kdoObsah.text = "Kdo?";
+    kdeObsah.text = "Kde?";
+    projektyObsah.text = "pod Škoda Auto";
+    kontaktObsah.text = "Kontakt?";
+  } else if (pozice <= (posun + 3 * siroky)) {
+    kdoObsah.text = "Kdo?";
+    kdeObsah.text = "Kde?";
+    projektyObsah.text = "Projekty?";
+    if (mapa["os"] == "1" || mapa["os"] == "on") {
+      kontaktObsah.text = "třeba naživo";
+    } else {
+      kontaktObsah.text = "třeba na Messengeru";
+    }
+  } else {
+    kdoObsah.text = "Kdo?";
+    kdeObsah.text = "Kde?";
+    projektyObsah.text = "Projekty?";
+    kontaktObsah.text = "Kontakt?";
+  }
 }
 
 ///    _|_ _     _ .|_  |   |_  _ _|
@@ -115,18 +161,18 @@ void vstoupitkheslu(_) async {
     if (poprve) {
       poprve = false;
     } else {
-      document.querySelector("head")!.children.add(styl);
+      document.head!.children.add(styl);
     }
     heslo = await (prompt("Heslo", ""));
   }
-  document.querySelector("head")!.children.remove(styl);
-  if (heslo != null) vstoupitkzapisu(_);
+  document.head!.children.remove(styl);
+  if (heslo != null) vstoupitkzapisu();
 }
 
 ///    _|_ _     _ .|_  |   _  _/ _ . _
 /// \/_)|_(_)|_||_)||_  |(  /_(_||_)|_)|_|
 ///             |                |
-void vstoupitkzapisu(_) async {
+void vstoupitkzapisu() async {
   FormElement formular = FormElement();
   formular
     ..action = "zapis.php"
@@ -145,8 +191,7 @@ void vstoupitkzapisu(_) async {
   jeIn
     ..id = "je_in"
     ..name = "in"
-    ..type = "checkbox"
-    ..checked = true;
+    ..type = "checkbox";
   LabelElement stIn = LabelElement();
   stIn
     ..className = "icon icon-instagram"
@@ -244,14 +289,14 @@ void vstoupitkzapisu(_) async {
   pole.forEach(formular.children.add as void Function(Node));
   if (await (modal(
       "Stav?", [formular], "Odeslat", "Zrušit", true, false, true))) {
-    zapsat(pole, formular);
+    zapsat(formular);
   }
 }
 
 /// _  _  _  _ _ |_
 /// /_(_||_)_)(_||_
 ///      |
-void zapsat(List<Node> stav, FormElement formular) {
-  querySelector("body")!.children.add(formular);
+void zapsat(FormElement formular) {
+  document.body!.children.add(formular);
   formular.submit();
 }

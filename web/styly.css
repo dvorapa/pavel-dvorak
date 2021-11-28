@@ -3,16 +3,17 @@ Body{color:#262626; font-family:McLaren,"Palatino Linotype","Book Antiqua",serif
 
 Header,Section,Footer{width:100%}
 .rozsazeny A{padding-left:.6em; padding-right:.6em}
+.rozsazenejsi A{padding-left:1.2em; padding-right:1.2em}
 
-Header{background:rgba(255,255,255,.85); font-size:1.2em; position:fixed; z-index:10}
+Header{background:rgba(255,255,255,.85); font-size:1.2em; position:fixed; text-align:center; z-index:10}
 .headroom--pinned{display:block}
 .headroom--unpinned{display:none}
 .headroom--bottom{display:block}
 Header>*{margin:.5em}
-H1{float:left; font-size:1.4em}
+/*H1{font-size:1.4em}*/
 A{color:dimgray; cursor:pointer; text-decoration:none}
 A:hover,A:active{text-shadow:0 0 .2em}
-Header>B{float:right; margin:.9em auto}
+Header>B{display:inline-block; margin:.9em auto}
 .icon{font-size:1.5em}
 Header .text{display:none}
 
@@ -33,8 +34,9 @@ Strong{font-size:2.4em}
 
 #kde{background:#BBBB33; background:url(kde.png) bottom 10% right -5%/50% no-repeat fixed #BBBB33; color:white}
 
-#projekty{background:#262626; background:url(projekty.png) bottom 10% right -5%/50% no-repeat fixed #262626; color:gray}
+#projekty{background:#262626; background:url(projekty.png) bottom 10% right -5%/50% no-repeat fixed #262626; color:gray; text-align:center}
 #projekty A{color:gray}
+#projekty .zuzeny{margin:auto}
 
 #kontakt{background:#CFE5B7; background:url(kontakt.png) bottom 10% right -5%/50% no-repeat fixed crimson}
 #kontakt H2{color:salmon}
@@ -89,6 +91,7 @@ Footer{background:#262626; background:url(patab.png) bottom left/contain no-repe
 @media (orientation:landscape) and (min-width:850px) {
 Body{font-size:1em}
 .rozsazeny A{padding-left:.9em; padding-right:.9em}
+.rozsazenejsi A{padding-left:1.8em; padding-right:1.8em}
 Section,Footer{background-size:27.5% !important}
 #kdo{background:white; background:url(kdob.png) left -10% bottom/40% no-repeat fixed white !important}
 #kde{background:#BBBB33; background:url(kdeb.jpg) center/cover no-repeat fixed #BBBB33 !important}
@@ -97,13 +100,18 @@ Footer{background:#262626; background:url(patab.png) bottom left/contain no-repe
 
 @media (orientation:landscape) and (min-width:1090px) {
 .rozsazeny A{padding-left:1.2em; padding-right:1.2em}
+.rozsazenejsi A{padding-left:2.4em; padding-right:2.4em}
 Header .icon{display:inline}
 #kdo{background:white; background:url(kdob.png) left -10% bottom 50%/40% no-repeat fixed white !important}
+#projekty .zuzeny{max-width:70%}
 #kontakt .icon{font-size:5em}
 }
 
 @media (orientation:landscape) and (min-width:1570px) {
 .rozsazeny A{padding-left:1.5em; padding-right:1.5em}
+.rozsazenejsi A{padding-left:3em; padding-right:3em}
+Header .icon{display:inline}
+#projekty .zuzeny{max-width:70%}
 #kontakt .icon{font-size:6em}
 }
 
@@ -132,4 +140,10 @@ Header .text{display:inline}
 @media (orientation:portrait) and (min-width:850px) {
 Header .icon{display:inline}
 #kontakt .icon{font-size:5em}
+}
+
+@media (orientation:portrait) and (min-width:1090px) {
+Header .icon{display:inline}
+#projekty .zuzeny{max-width:70%}
+#kontakt .icon{font-size:6em}
 }

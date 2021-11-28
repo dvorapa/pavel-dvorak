@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'icomoon';
-  src:  url('icomoon.eot?q77la');
-  src:  url('icomoon.eot?q77la#iefix') format('embedded-opentype'),
-    url('icomoon.ttf?q77la') format('truetype'),
-    url('icomoon.woff?q77la') format('woff'),
-    url('icomoon.svg?q77la#icomoon') format('svg');
+  src:  url('icomoon.eot?nip4ii');
+  src:  url('icomoon.eot?nip4ii#iefix') format('embedded-opentype'),
+    url('icomoon.ttf?nip4ii') format('truetype'),
+    url('icomoon.woff?nip4ii') format('woff'),
+    url('icomoon.svg?nip4ii#icomoon') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -25,6 +25,18 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-messenger:before {
+  content: "\6d";
+}
+.icon-bot:before {
+  content: "\42";
+}
+.icon-particles:before {
+  content: "\4d";
+}
+.icon-corona:before {
+  content: "\50";
+}
 .icon-coffee:before {
   content: "\6b";
 }
@@ -39,6 +51,9 @@
 }
 .icon-dance:before {
   content: "\44";
+}
+.icon-stepslow:before {
+  content: "\53";
 }
 .icon-email:before {
   content: "\65";
@@ -55,18 +70,9 @@
 .icon-twitter1:before {
   content: "\74";
 }
-.icon-messenger:before {
-  content: "\6d";
-}
-.icon-pywikibot:before {
-  content: "\50";
-}
-.icon-twitter2:before {
-  content: "\54";
-}
 .icon-car:before {
   content: "\43";
 }
-.icon-stepslow:before {
-  content: "\53";
+.icon-twitter2:before {
+  content: "\54";
 }

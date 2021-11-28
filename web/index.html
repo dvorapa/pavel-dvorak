@@ -5,7 +5,7 @@
 <Meta Name="author" Content="Pavel Dvořák">
 <Meta Name="description" Content="chemik nanotechnolog, tanečník společenských tanců, seveřan">
 <Meta Name="keywords" Content="Pavel Dvořák,dvorapa,nanotechnolog,chemik,nanotechnologie,nanomateriály,Technická univerzita v Liberci,TUL,tanečník,tanec,společenské tance,standardní tance,latinsko-americké tance,sportovní tanec,seveřan,Liberec,Mladá Boleslav,Kosmonosy,Bělá pod Bezdězem,Škoda Auto">
-<Meta Name="version" Content="1.8.0">
+<Meta Name="version" Content="1.9.0">
 <Meta Name="viewport" Content="width=device-width,initial-scale=1">
 <Meta Property="og:image" Content="/og-image.jpg">
 <Meta Property="og:image:width" Content="279">
@@ -32,13 +32,11 @@
 </Head>
 <Body>
 <Header>
-<H1><A Href="/">Pavel Dvořák</A></H1>
-
-<B Class="rozsazeny">
-<A Href="#kdo"><Span Class="text">Kdo?</Span> <Span Class="icon icon-man"></Span></A>
-<A Href="#kde"><Span Class="text">Kde?</Span> <Span Class="icon icon-map"></Span></A>
-<A Href="#projekty"><Span Class="text">Projekty?</Span> <Span Class="icon icon-erlenmeyer-flask"></Span></A>
-<A Href="#kontakt"><Span Class="text">Kontakt?</Span> <Span Class="icon icon-coffee"></Span></A>
+<B Class="rozsazenejsi">
+<A Href="#kdo" Id="kdo-obsah"><Span Class="text">Kdo?</Span> <Span Class="icon icon-man"></Span></A>
+<A Href="#kde" Id="kde-obsah"><Span Class="text">Kde?</Span> <Span Class="icon icon-map"></Span></A>
+<A Href="#projekty" Id="projekty-obsah"><Span Class="text">Projekty?</Span> <Span Class="icon icon-erlenmeyer-flask"></Span></A>
+<A Href="#kontakt" Id="kontakt-obsah"><Span Class="text">Kontakt?</Span> <Span Class="icon icon-coffee"></Span></A>
 </B>
 </Header>
 
@@ -54,51 +52,58 @@
 ...kdyby mě někdo sháněl...
 </Div></Section>
 
-<Section Class="siroky rozsazeny" Id="projekty"><Div>
+<Section Class="siroky rozsazenejsi" Id="projekty"><Div>
 <H2>jsem <Strong>zavrtán</Strong> do&nbsp;těchto <Strong>projektů</Strong></H2>
 <!-- orangered, gold, lime -->
-<A Style="color:lime" Class="hint--bottom-right" Aria-label="Plný úvazek&#10;na elektronice vozu" Href="https://www.skoda-auto.cz/">
+<Div Class="zuzeny">
+<A Style="color:lime" Class="hint--bottom" Aria-label="Plný úvazek&#10;ve Škoda Auto" Href="https://www.skoda-auto.cz/">
 <svg height="6em" version="1.1" width="6em">
-<text fill="lime" font-family="icomoon" font-size="6em" font-weight="normal" x="-.02em" y=".75em">C</text>
+<text fill="lime" font-family="icomoon" font-size="6em" font-weight="normal" x="-.03em" y=".75em">C</text>
 </svg>
 <Br>
-Škoda Auto
+Elektronika vozu
 </A>
-<A Style="color:gold" Class="hint--bottom" Aria-label="Vyšší výkonostní&#10;třída v tanci" Href="https://www.csts.cz/cs/evidence/clenove/detailni-udaje-clena/18001334/soutezni-udaje">
+<A Style="color:lime" Class="hint--bottom" Aria-label="Vyšší výkonostní&#10;třída v tanci" Href="https://tkkoskovi.cz/">
 <svg height="6em" version="1.1" width="6em">
-<defs>
-<linearGradient id="linearGradient2" x1="100%" y1="100%" x2="100%" y2="0%">
-<stop offset="0%" stop-color="gold" />
-<stop offset="65%" stop-color="gold" />
-<stop offset="65%" stop-color="gray" />
-<stop offset="100%" stop-color="gray" />
-</linearGradient>
-</defs>
-<text fill="url(#linearGradient2)" font-family="icomoon" font-size="6em" font-weight="normal" x="-.02em" y=".75em">D</text>
+<text fill="lime" font-family="icomoon" font-size="6em" font-weight="normal" x="-.02em" y=".75em">D</text>
 </svg>
 <Br>
-Třída B/A
+Sportovní tanec
 </A>
-<A Style="color:orangered" Class="hint--bottom-left" Aria-label="Přehrávač hudby&#10;pro tanečníky" Href="https://github.com/dvorapa/stepslow">
+<A Style="color:lime" Class="hint--bottom" Aria-label="Přehrávač hudby&#10;pro tanečníky" Href="https://github.com/dvorapa/stepslow">
 <svg height="6em" version="1.1" width="6em">
-<defs>
-<linearGradient id="linearGradient3" x1="100%" y1="100%" x2="100%" y2="0%">
-<stop offset="0%" stop-color="orangered" />
-<stop offset="20%" stop-color="orangered" />
-<stop offset="20%" stop-color="gray" />
-<stop offset="100%" stop-color="gray" />
-</linearGradient>
-</defs>
-<text fill="url(#linearGradient3)" font-family="icomoon" font-size="6em" font-weight="normal" x="-.02em" y=".75em">S</text>
+<text fill="lime" font-family="icomoon" font-size="6em" font-weight="normal" x="0" y=".75em">S</text>
 </svg>
 <Br>
 stepslow
 </A>
+<A Style="color:gold" Class="hint--bottom" Aria-label="Diplomová práce&#10;2020" Href="https://theses.cz/id/emus3n/">
+<svg height="6em" version="1.1" width="6em">
+<text fill="gold" font-family="icomoon" font-size="6em" font-weight="normal" x="-.03em" y=".75em">P</text>
+</svg>
+<Br>
+Proteinová korona
+</A>
+<A Style="color:gold" Class="hint--bottom" Aria-label="Robot pro&#10;Českou Wikipedii" Href="https://github.com/dvorapa/dvorapabot">
+<svg height="6em" version="1.1" width="6em">
+<text fill="gold" font-family="icomoon" font-size="6em" font-weight="normal" x="-.01em" y=".75em">B</text>
+</svg>
+<Br>
+DvorapaBot
+</A>
+<A Style="color:orangered" Class="hint--bottom" Aria-label="Bakalářská práce&#10;2017" Href="https://theses.cz/id/36919u/">
+<svg height="6em" version="1.1" width="6em">
+<text fill="orangered" font-family="icomoon" font-size="6em" font-weight="normal" x="0" y=".75em">M</text>
+</svg>
+<Br>
+Magnetické nanočástice
+</A>
+</Div>
 </Div></Section>
 
 <Section Class="siroky rozsazeny" Id="kontakt"><Div>
 <H2>a jsem <Strong>k&nbsp;sehnání</Strong> tady</H2>
-<A Class="hint--bottom-right" Aria-label="Instagram" Href="https://www.instagram.com/dvorapa/" Id="in">
+<A Class="hint--bottom" Aria-label="Instagram" Href="https://www.instagram.com/dvorapa/" Id="in">
 <Span Class="icon icon-instagram"></Span>
 </A>
 <A Class="hint--bottom" Aria-label="Twitter" Href="https://twitter.com/dvorapa" Id="tw">
@@ -116,7 +121,7 @@ stepslow
 <A Class="hint--bottom" Aria-label="Messenger" Href="https://www.messenger.com/t/dvorapa" Id="me">
 <Span Class="icon icon-messenger"></Span>
 </A>
-<A Class="hint--bottom-left" Aria-label="Linkedin" Href="https://www.linkedin.com/in/dvorapa/" Id="li">
+<A Class="hint--bottom" Aria-label="Linkedin" Href="https://www.linkedin.com/in/dvorapa/" Id="li">
 <Span Class="icon icon-linkedin"></Span>
 </A>
 </Div></Section>
@@ -133,6 +138,8 @@ stepslow
 <H2>co podporuji</H2>
 <A Href="https://www.svobodni.cz/politicka-filosofie-svobodnych/" Style="font-size:1.1em">hodnoty Svobodných</A>
 <A Href="https://www.ipetitions.com/petition/petice-za-zruseni-svatku-svateho-valentyna-a/" Style="font-size:.8em">zrušení valentýna</A>
+<Br>
+<A Href="https://pravozit.cz/petice-za-korunu/" Style="font-size:.95em">zachování koruny</A>
 </Div></Section>
 
 <Footer Class="uzky"><Div>
