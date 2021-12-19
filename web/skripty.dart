@@ -135,10 +135,20 @@ void nadepsat(_) {
     kdoObsah.text = "Kdo?";
     kdeObsah.text = "Kde?";
     projektyObsah.text = "Projekty?";
-    if (mapa["os"] == "1" || mapa["os"] == "on") {
-      kontaktObsah.text = "třeba naživo";
-    } else {
-      kontaktObsah.text = "třeba na Messengeru";
+    kontaktObsah.text = "třeba naživo";
+    Map<String, String> poradi = {
+      "me": "Messengeru",
+      "tw": "Twitteru",
+      "mo": "mobilu",
+      "em": "e-mailu",
+      "in": "Instagramu",
+      "li": "LinkedInu"
+    };
+    for (final String sit in poradi.keys) {
+      if (mapa[sit] == "1" || mapa[sit] == "on") {
+        kontaktObsah.text = "třeba na " + poradi[sit]!;
+        break;
+      }
     }
   } else {
     kdoObsah.text = "Kdo?";
@@ -258,7 +268,7 @@ void vstoupitkzapisu() async {
   LabelElement kTerminu = LabelElement();
   kTerminu
     ..htmlFor = "je_termin"
-    ..text = "Termín:";
+    ..text = "Termín do:";
   InputElement termin = InputElement();
   termin
     ..name = "termin"
