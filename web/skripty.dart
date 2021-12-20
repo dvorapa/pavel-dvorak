@@ -92,7 +92,7 @@ void doplnit() {
 /// (_)|_)(_|| \/||_
 ///
 void obarvit() {
-  for (final promenna in mapa.keys) {
+  for (final String promenna in mapa.keys) {
     if (mapa[promenna] == 1 || mapa[promenna] == "on") {
       Element prvek = querySelector("#" + promenna)!;
       String hint = prvek.getAttribute("aria-label")!;
@@ -136,7 +136,7 @@ void nadepsat(_) {
     kdeObsah.text = "Kde?";
     projektyObsah.text = "Projekty?";
     kontaktObsah.text = "třeba naživo";
-    Map<String, String> poradi = {
+    final Map<String, String> poradi = {
       "me": "Messengeru",
       "tw": "Twitteru",
       "mo": "mobilu",
@@ -144,11 +144,12 @@ void nadepsat(_) {
       "in": "Instagramu",
       "li": "LinkedInu"
     };
-    for (final String sit in poradi.keys) {
-      if (mapa[sit] == "1" || mapa[sit] == "on") {
-        kontaktObsah.text = "třeba na " + poradi[sit]!;
-        break;
-      }
+    final String idealniSit = poradi.keys.firstWhere(
+        (final String sit) => mapa[sit] == 1 || mapa[sit] == "on",
+        orElse: () => "");
+    final String? nazevSite = poradi[idealniSit];
+    if (nazevSite != null) {
+      kontaktObsah.text = "třeba na " + nazevSite;
     }
   } else {
     kdoObsah.text = "Kdo?";
