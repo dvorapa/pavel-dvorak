@@ -78,11 +78,11 @@ void vytvorit() {
 ///       |
 void doplnit() {
   if (stav == "doma") {
-    mapa = {"in": 0, "tw": 1, "em": 1, "os": 1, "mo": 1, "me": 1, "li": 0};
+    mapa = {"in": 1, "tw": 1, "em": 1, "os": 1, "mo": 1, "me": 1, "li": 0};
   } else if (["venku", "na kole", "na cestě"].contains(stav)) {
     mapa = {"in": 0, "tw": 0, "em": 0, "os": 1, "mo": 1, "me": 0, "li": 0};
   } else if (["v karanténě", "v izolaci", "nemocný"].contains(stav)) {
-    mapa = {"in": 0, "tw": 1, "em": 1, "os": 0, "mo": 1, "me": 1, "li": 0};
+    mapa = {"in": 1, "tw": 1, "em": 1, "os": 0, "mo": 1, "me": 1, "li": 0};
   } else {
     mapa = {"in": 0, "tw": 0, "em": 0, "os": 1, "mo": 0, "me": 0, "li": 0};
   }
@@ -202,7 +202,8 @@ void vstoupitkzapisu() async {
   jeIn
     ..id = "je_in"
     ..name = "in"
-    ..type = "checkbox";
+    ..type = "checkbox"
+    ..checked = true;
   LabelElement stIn = LabelElement();
   stIn
     ..className = "icon icon-instagram"
