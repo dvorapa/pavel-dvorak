@@ -5,12 +5,13 @@ import "package:yaml/yaml.dart";
 DateTime dnes = DateTime.now();
 late Map mapa;
 late String stav;
+late Map dvojice;
+String lang = document.documentElement!.lang!;
 
 ///  _  _ . _
 /// |||(_||| )
 ///
 void main() {
-  nadepsat(0);
   HttpRequest.request("stav.yaml", responseType: "text")
       .then((HttpRequest request) {
     String yaml = request.responseText ?? "";
@@ -27,10 +28,13 @@ void main() {
     doplnit();
   }).whenComplete(() {
     querySelector("#stav")!.text = stav;
-    obarvit();
+    poprekladat().then((_) {
+      nadepsat(0);
+      window.onScroll.listen(nadepsat);
+      obarvit();
+    });
   });
 
-  window.onScroll.listen(nadepsat);
   querySelector("#vchodkheslu")!.onClick.listen(vstoupitkheslu);
 }
 
@@ -88,6 +92,50 @@ void doplnit() {
   }
 }
 
+///  _  v _| _ _v.|_
+/// |_)|‾(-|(_)/_||_
+/// |
+String? prelozit(String? text) {
+  if (lang == "cs") {
+    return text;
+  }
+  for (final String cesky in dvojice.keys) {
+    text = text?.replaceAll(cesky, dvojice[cesky]);
+  }
+  return text;
+}
+
+///  _  _  _  v _| | _/ _| _ |_
+/// |_)(_)|_)|‾(-|(|(_|(_|(_||_
+/// |     |
+Future<void> poprekladat() async {
+  if (lang == "en") {
+    await HttpRequest.request("preklady.yaml", responseType: "text")
+        .then((HttpRequest request) {
+      String yaml = request.responseText ?? "";
+      dvojice = loadYaml(yaml);
+    }).catchError((_) {
+      dvojice = <String, String>{};
+    }).whenComplete(() {
+      List<Element> translatables = querySelectorAll("[translate]");
+      for (final Element translatable in translatables) {
+        String? innerHtml = translatable.innerHtml;
+        String? label = translatable.getAttribute("aria-label");
+        innerHtml = prelozit(innerHtml);
+        label = prelozit(label);
+        if (innerHtml != null) {
+          translatable.setInnerHtml(innerHtml,
+              validator: NodeValidatorBuilder()
+                ..allowHtml5()
+                ..allowSvg()
+                ..allowInlineStyles());
+        }
+        if (label != null) translatable.setAttribute("aria-label", label);
+      }
+    });
+  }
+}
+
 ///  _ |_  _  _  .|_
 /// (_)|_)(_|| \/||_
 ///
@@ -98,7 +146,7 @@ void obarvit() {
       String hint = prvek.getAttribute("aria-label")!;
       prvek
         ..classes.add("hint--success")
-        ..setAttribute("aria-label", hint + "\ndostupný")
+        ..setAttribute("aria-label", prelozit(hint + "\ndostupný")!)
         ..querySelector(".icon")!.style.color = "greenyellow";
     }
   }
@@ -116,46 +164,33 @@ void nadepsat(_) {
   final Element kdeObsah = querySelector("#kde-obsah .text")!;
   final Element projektyObsah = querySelector("#projekty-obsah .text")!;
   final Element kontaktObsah = querySelector("#kontakt-obsah .text")!;
+  kdoObsah.text = prelozit("Kdo?");
+  kdeObsah.text = prelozit("Kde?");
+  projektyObsah.text = prelozit("Projekty?");
+  kontaktObsah.text = prelozit("Kontakt?");
   if (pozice <= posun) {
-    kdoObsah.text = "Pavel Dvořák";
-    kdeObsah.text = "Kde?";
-    projektyObsah.text = "Projekty?";
-    kontaktObsah.text = "Kontakt?";
+    kdoObsah.text = prelozit("Pavel Dvořák");
   } else if (pozice <= (posun + siroky)) {
-    kdoObsah.text = "Kdo?";
-    kdeObsah.text = "asi " + stav;
-    projektyObsah.text = "Projekty?";
-    kontaktObsah.text = "Kontakt?";
+    kdeObsah.text = prelozit("asi " + stav);
   } else if (pozice <= (posun + 2 * siroky)) {
-    kdoObsah.text = "Kdo?";
-    kdeObsah.text = "Kde?";
-    projektyObsah.text = "pod Škoda Auto";
-    kontaktObsah.text = "Kontakt?";
+    projektyObsah.text = prelozit("ve Škoda Auto");
   } else if (pozice <= (posun + 3 * siroky)) {
-    kdoObsah.text = "Kdo?";
-    kdeObsah.text = "Kde?";
-    projektyObsah.text = "Projekty?";
-    kontaktObsah.text = "třeba naživo";
+    kontaktObsah.text = prelozit("třeba naživo");
     final Map<String, String> poradi = {
-      "me": "Messengeru",
+      "me": "Messenger",
       "tw": "Twitteru",
       "mo": "mobilu",
       "em": "e-mailu",
       "in": "Instagramu",
-      "li": "LinkedInu"
+      "li": "Linkedinu"
     };
     final String idealniSit = poradi.keys.firstWhere(
         (final String sit) => mapa[sit] == 1 || mapa[sit] == "on",
         orElse: () => "");
     final String? nazevSite = poradi[idealniSit];
     if (nazevSite != null) {
-      kontaktObsah.text = "třeba na " + nazevSite;
+      kontaktObsah.text = prelozit("třeba na " + nazevSite);
     }
-  } else {
-    kdoObsah.text = "Kdo?";
-    kdeObsah.text = "Kde?";
-    projektyObsah.text = "Projekty?";
-    kontaktObsah.text = "Kontakt?";
   }
 }
 
